@@ -1,0 +1,532 @@
+@use "@coreui/coreui/scss/coreui" as * with ($enable-deprecation-messages: false,
+);
+@use "@coreui/chartjs/scss/coreui-chartjs";
+@use "vendors/simplebar";
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+
+body {
+  background-color: var(--cui-tertiary-bg);
+}
+
+.wrapper {
+  inline-size: 100%;
+  padding-inline: var(--cui-sidebar-occupy-start, 0) var(--cui-sidebar-occupy-end, 0);
+  will-change: auto;
+  @include transition(padding .15s);
+}
+
+.header>.container-fluid,
+.sidebar-header {
+  min-block-size: calc(4rem + 1px); // stylelint-disable-line function-disallowed-list
+}
+
+/* Estilo optimizado para transiciones rápidas pero suaves */
+.sidebar {
+  transition:
+    margin-left 0.07s,
+    margin-right 0.07s,
+    box-shadow 0.035s,
+    transform 0.07s,
+    width 0.07s,
+    z-index 0s ease 0.07s;
+}
+
+.sidebar-dark {
+  --cui-body-bg: #0e4c71;
+  --cui-border-color: #0e4c71;
+}
+
+.sidebar-brand-full {
+  margin-inline-start: 3px;
+}
+
+.sidebar-header {
+  .nav-underline-border {
+    --cui-nav-underline-border-link-padding-x: 1rem;
+    --cui-nav-underline-border-gap: 0;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    min-block-size: calc(4rem + 1px); // stylelint-disable-line function-disallowed-list
+  }
+}
+
+
+.sidebar .nav-link {
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.sidebar-nav {
+  --cui-sidebar-nav-link-icon-width: 2rem;
+  --cui-sidebar-nav-link-icon-height: 2rem;
+  --cui-sidebar-nav-link-icon-font-size: 2rem;
+}
+
+.sidebar .nav-title {
+  color: #fff;
+  font-size: 1.10rem;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #e72f2b;
+}
+
+.sidebar .nav-link.active {
+  background-color: #e72f2b;
+}
+
+
+.sidebar-toggler {
+  margin-inline-start: auto;
+  --cui-sidebar-toggler-color: white;
+  --cui-sidebar-toggler-active-bg: white;
+  --cui-sidebar-toggler-hover-color: white;
+  --cui-sidebar-toggler-focus-color: white;
+
+}
+
+.sidebar-narrow,
+.sidebar-narrow-unfoldable:not(:hover) {
+  .sidebar-toggler {
+    margin-inline-end: auto;
+  }
+}
+
+.header>.container-fluid+.container-fluid {
+  min-block-size: 3rem;
+}
+
+.nav-icon {
+  background-color: transparent;
+  color: white !important;
+  inline-size: 2.0rem !important;
+  block-size: 2.0rem !important;
+}
+
+.nav-toggler {
+  background-color: transparent;
+  color: white;
+  inline-size: 1.0rem;
+  block-size: 1.0rem;
+  transition: background-color 0.3s ease;
+}
+
+.nav-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Efecto hover suave */
+}
+
+.footer {
+  min-block-size: calc(3rem + 1px); // stylelint-disable-line function-disallowed-list
+}
+
+.titulos-esfot {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: bold;
+  color: #e72f2b;
+}
+
+.subtitulos-esfot {
+  font-weight: bold;
+  color: #0e4c71;
+}
+
+.textos-esfot {
+  color: #f8ad25;
+  font-weight: bold;
+}
+
+.iconos-esfot {
+  font-weight: bold;
+  color: #0e4c71;
+}
+
+.iconos-esfot:hover {
+  color: #e72f2b;
+}
+
+.btn-esfot {
+  background-color: #e72f2b;
+  border-color: #e72f2b;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-esfot-form {
+  background-color: #e72f2b;
+  border-color: #e72f2b;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-esfot-form:hover {
+  background-color: #f8ad25;
+  border-color: #f8ad25;
+  color: black;
+}
+
+.btn-esfot:hover {
+  background-color: #f8ad25;
+  border-color: #f8ad25;
+}
+
+/* Borde por defecto */
+.react-select-container .react-select__control {
+  min-block-size: 47px;
+  border: 1px solid #ced4da;
+  border-radius: 0 0.375rem 0.375rem 0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Error sin focus */
+.react-select-container.is-invalid-select .react-select__control {
+  border-color: #e55353 !important;
+}
+
+/* Error con focus (se activa junto con la clase de focus) */
+.react-select-container.is-invalid-select .react-select__control--is-focused {
+  border: 1px solid #e55353 !important;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.react-select-container.is-invalid-select .react-select__placeholder {
+  color: #e55353 !important;
+  /* rojo error */
+}
+
+/* Focus normal sin error */
+.react-select-container .react-select__control--is-focused {
+  border: 1px solid #0e4c71 !important;
+  box-shadow: 0 0 0 0.25rem rgba(14, 76, 113, 0.25)
+}
+
+// CInputGroupText in focus
+.form-control:focus {
+  border-color: #0e4c71;
+  box-shadow: 0 0 0 0.25rem rgba(14, 76, 113, 0.25);
+}
+
+.form-select:focus {
+  border-color: #0e4c71;
+  box-shadow: 0 0 0 0.25rem rgba(14, 76, 113, 0.25);
+}
+
+// Form control is invalid
+.form-control.is-invalid {
+  color: #e55353 !important;
+}
+
+// Form control is invalid placeholder
+.form-control.is-invalid::placeholder {
+  color: #e55353 !important;
+}
+
+.bg-esfot {
+  background-color: #0e4c71 !important;
+}
+
+.bg-esfot th {
+  background-color: #0e4c71 !important;
+  color: white !important;
+  border-block-start: 3px !important;
+}
+
+/* Estilos personalizados para toggle buttons */
+.custom-toggle {
+  background-color: #0e4c71;
+  color: white;
+  border: #0e4c71;
+}
+
+.btn-check:checked+.custom-toggle {
+  background-color: #f8ad25 !important;
+  color: #000;
+  border-color: #f8ad25;
+}
+
+.custom-toggle:hover {
+  background-color: #e72f2b !important;
+  color: white !important;
+  border-color: #e72f2b;
+}
+
+
+.custom-input::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.text-danger::placeholder {
+  color: #dc3545 !important;
+  opacity: 1;
+}
+
+.table-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Edge */
+}
+
+.table-container {
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Sticky header para los th */
+.table-container thead th {
+  position: sticky;
+  inset-block-start: 0;
+  background-color: #0e4c71;
+  /* color similar a table-dark */
+  z-index: 10;
+}
+
+/* Oculta scrollbar en webkit (Chrome, Edge, Safari) */
+.react-select__menu-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Oculta scrollbar en Firefox */
+.react-select__menu-list {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE y Edge */
+}
+
+// Evita el cambio a morado o azul al hacer clic en un CDropdownItem
+.c-dropdown-item {
+  background-color: transparent !important;
+
+  &:hover,
+  &:focus,
+  &:active {
+    cursor: pointer;
+    background-color: #f3f4f7 !important;
+    color: #000 !important;
+  }
+}
+
+/* 1. Botones del toolbar */
+.rbc-toolbar button {
+  background-color: #0e4c71 !important;
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.rbc-toolbar button:hover,
+.rbc-toolbar button:focus,
+.rbc-toolbar button:active {
+  background-color: #e72f2b !important;
+  outline: none;
+  box-shadow: none;
+}
+
+.rbc-toolbar button.active {
+  background-color: #e72f2b !important;
+}
+
+
+/* 2. Mayúsculas en encabezados */
+.rbc-toolbar-label,
+.rbc-agenda-header,
+.rbc-month-header,
+.rbc-time-header,
+.rbc-time-header-content .rbc-header {
+  text-transform: uppercase;
+  font-weight: normal !important;
+  color: #e72f2b;
+  font-size: 1.5rem;
+}
+
+
+
+/* 3. Ocultar eventos de todo el día */
+.rbc-allday-cell,
+.rbc-allday-events {
+  display: none !important;
+  block-size: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none;
+}
+
+/* 4. Encabezado azul con letras blancas (mes, semana y agenda) */
+.rbc-header,
+.rbc-time-header-content {
+  background-color: #0e4c71 !important;
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+.rbc-event:focus {
+  outline: none !important;
+  border: 1px solid #0e4c71 !important;
+  border-color: #0e4c71;
+  box-shadow: 0 0 0 0.25rem rgba(14, 76, 113, 0.25);
+  cursor: pointer;
+}
+
+.rbc-event:hover {
+  border-color: #0e4c71 !important;
+  box-shadow: 0 0 0 0.25rem rgba(14, 76, 113, 0.25);
+  cursor: pointer;
+}
+
+.rbc-event,
+.rbc-day-slot .rbc-background-event {
+  border: 1px solid #0e4c71 !important;
+}
+
+
+.rbc-header {
+  padding: 0.5rem 0.5rem !important;
+}
+
+.rbc-time-header-gutter,
+.rbc-time-gutter {
+  background-color: #0e4c71 !important;
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  justify-content: center !important;
+}
+
+.rbc-time-header-cell button {
+  text-transform: uppercase !important;
+  font-weight: bold !important;
+
+}
+
+.rbc-agenda-table th {
+  text-align: center !important;
+}
+
+
+/* 6. Agenda - bordes entre eventos */
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell,
+.rbc-agenda-event-cell {
+  border: 2px solid #fff;
+  padding: 5px;
+}
+
+.rbc-agenda-event-cell {
+  cursor: pointer;
+}
+
+/* 7. Quitar border de tablas y calendariois*/
+.rbc-month-view,
+.rbc-time-view,
+.rbc-agenda-view,
+.rbc-time-content {
+  border: none !important;
+  box-shadow: 0 .125rem .25rem rgba($black, .075);
+  scrollbar-width: none;
+}
+
+/* 8. Aumentar tamaño de letra de encabezados */
+.rbc-header,
+.rbc-agenda-header,
+.rbc-month-header,
+.rbc-time-header,
+.rbc-time-header-content .rbc-header,
+.rbc-agenda-table th {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.rbc-agenda-table {
+  border: none !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+}
+
+.rbc-agenda-content {
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}
+
+.rbc-agenda-content::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari y Opera */
+}
+
+.rbc-agenda-view .rbc-agenda-table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+}
+
+
+
+/* Centrar texto vertical y horizontalmente */
+.rbc-agenda-empty {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  block-size: 100%;
+  /* Ocupa todo el alto del contenedor padre */
+  inline-size: 100%;
+  /* Ocupa todo el ancho del contenedor padre */
+  background-color: #f8f9fa;
+  color: #6c757d;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 0;
+  /* Elimina márgenes para que no reduzcan espacio */
+  min-block-size: 200px;
+  /* Opcional, para asegurar una altura mínima */
+}
+
+
+@include color-mode(dark) {
+  body {
+    background-color: var(--cui-dark-bg-subtle);
+  }
+
+  .footer {
+    --cui-footer-bg: var(--cui-body-bg);
+  }
+}
+
+@media (max-width: 1259px) {
+  .rbc-toolbar {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 856px) {
+  .rbc-toolbar {
+    flex-direction: column;
+  }
+}

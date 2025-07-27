@@ -1,0 +1,73 @@
+
+import mongoose from "mongoose";
+
+// Esquema del aula
+const aulaSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'El nombre del aula es requerido'],
+        unique: true,
+        match: [/^E\d{2}\/PB\d{1}\/E\d{3}$/, 'El nombre debe seguir el formato E00/PB0/E000'],
+        uppercase: true
+    },
+    description: {
+        type: String,
+        required: [true, 'La descripción es requerida'],
+        trim: true,
+        maxlength: [100, 'La descripción no puede tener más de 100 caracteres']
+    },
+    capacity: {
+        type: Number,
+        required: [true, 'La capacidad es requerida'],
+        min: [1, 'La capacidad debe ser al menos 1']
+    },
+    numberReservations: {
+        type: Number,
+        default: 0
+    },
+    status: {
+        type: Boolean,
+        default: true
+    },
+    createdDate: {
+        type: Date,
+        default: Date.now()
+    },
+    updatedDate: {
+        type: Date,
+        default: null
+    },
+    enableDate: {
+        type: Date,
+        default: Date.now()
+    },
+    disableDate: {
+        type: Date,
+        default: null
+    },
+    createBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        default: null
+    },
+    updateBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        default: null
+    },
+    enableBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        default: null
+    },
+    disableBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        default: null
+    },
+});
+
+// Exportar el modelo
+const Aula = mongoose.models.Aula || mongoose.model('Aula', aulaSchema);
+
+export default Aula;
