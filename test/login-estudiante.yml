@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - name: Inicio
+      duration: 30
+      arrivalRate: 20         # 20 usuarios por segundo (fase inicial)
+    - name: Carga media
+      duration: 30
+      arrivalRate: 50         # 50 usuarios por segundo
+    - name: Carga alta
+      duration: 30
+      arrivalRate: 100        # 100 usuarios por segundo
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: Login Estudiante Test
+    flow:
+      - post:
+          url: "/api/estudiante/login"
+          json:
+            email: "estudiante.esfot@epn.edu.ec"
+            password: "Estudiante@Esfot-1990"

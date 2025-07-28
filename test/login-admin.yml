@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - name: Inicio
+      duration: 30
+      arrivalRate: 20         # 20 usuarios virtuales por segundo (calentamiento)
+    - name: Carga media
+      duration: 30
+      arrivalRate: 50         # 50 usuarios por segundo
+    - name: Carga alta
+      duration: 30
+      arrivalRate: 100        # 100 usuarios por segundo
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: Login Admin Test
+    flow:
+      - post:
+          url: "/api/admin/login"
+          json:
+            email: "admin.esfot@epn.edu.ec"
+            password: "Admin@Esfot-1990"
